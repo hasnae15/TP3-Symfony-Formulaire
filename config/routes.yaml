@@ -1,0 +1,4 @@
+product_index:
+    path: /
+    controller: App\Controller\ProductController::index
+    methods: [GET, POST]

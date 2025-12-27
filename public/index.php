@@ -1,6 +1,18 @@
 <?php
-// Point d'entrée de l'application
-require_once __DIR__ . '/../src/Controller/ProductController.php';
+use App\Kernel;
+use Symfony\Component\HttpFoundation\Request;
 
-$controller = new App\Controller\ProductController();
-echo $controller->index();
+require_once dirname(__DIR__).'/vendor/autoload.php';
+
+// Simulation d'un kernel Symfony léger
+$kernel = new Kernel('dev', true);
+$request = Request::createFromGlobals();
+
+// Route simple
+if ($request->getPathInfo() === '/' || $request->getPathInfo() === '') {
+    $controller = new App\Controller\ProductController();
+    $response = $controller->index($request);
+    $response->send();
+} else {
+    echo "404 - Page not found";
+}

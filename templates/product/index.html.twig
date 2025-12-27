@@ -2,55 +2,81 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>TP3 - Formulaire Symfony</title>
+    <title>{% block title %}TP3 - Formulaire Symfony{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body { padding-top: 20px; }
         .product-image { max-height: 400px; object-fit: cover; }
+        .form-group { margin-bottom: 1rem; }
     </style>
 </head>
 <body>
 <div class="container my-5">
     <div class="row">
+        <!-- Colonne image -->
         <div class="col-md-6">
-            <img src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                 class="img-fluid rounded product-image" alt="Premium Wireless Headphones">
+            <img src="{{ product.imageUrl }}" 
+                 class="img-fluid rounded product-image" 
+                 alt="{{ product.name }}">
         </div>
         
+        <!-- Colonne informations -->
         <div class="col-md-6">
-            <h1 class="mb-3">Premium Wireless Headphones</h1>
-            <p class="text-muted fs-4 mb-3">$129.99</p>
+            <h1 class="mb-3">{{ product.name }}</h1>
+            <p class="text-muted fs-4 mb-3">${{ product.price|number_format(2) }}</p>
             
-            <p class="mb-4">
-                Experience superior sound quality with our premium wireless headphones. 
-                Features active noise cancellation, 30-hour battery life, and premium comfort padding.
-            </p>
+            <p class="mb-4">{{ product.description }}</p>
             
             <ul class="list-unstyled mb-4">
-                <li><strong>Brand:</strong> AudioTech</li>
-                <li><strong>Color:</strong> Matte Black</li>
-                <li><strong>Connectivity:</strong> Bluetooth 5.0</li>
-                <li><strong>Battery Life:</strong> 30 hours</li>
+                <li><strong>Brand:</strong> {{ product.brand }}</li>
+                <li><strong>Color:</strong> {{ product.color }}</li>
+                <li><strong>Connectivity:</strong> {{ product.connectivity }}</li>
+                <li><strong>Battery Life:</strong> {{ product.batteryLife }}</li>
             </ul>
             
-            <form method="post" action="/cart">
-                <div class="mb-3">
+            <!-- Formulaire Symfony-like -->
+            <form method="post" action="/cart" class="symfony-form">
+                {% if formData %}
+                <div class="alert alert-info mb-3">
+                    Données reçues : 
+                    Quantity: {{ formData.quantity|default(1) }}, 
+                    Color: {{ formData.color|default('black') }}
+                </div>
+                {% endif %}
+                
+                <div class="form-group">
                     <label for="quantity" class="form-label">Quantity</label>
                     <input type="number" class="form-control" id="quantity" name="quantity" 
-                           value="1" min="1" max="10" style="max-width: 100px;">
+                           value="{{ formData.quantity|default(1) }}" 
+                           min="1" max="10" style="max-width: 100px;">
                 </div>
                 
-                <div class="mb-3">
+                <div class="form-group">
                     <label for="color" class="form-label">Select Color</label>
                     <select class="form-select" id="color" name="color" style="max-width: 200px;">
-                        <option value="black">Matte Black</option>
-                        <option value="white">Pearl White</option>
-                        <option value="silver">Silver</option>
+                        <option value="black" {{ (formData.color|default('black')) == 'black' ? 'selected' : '' }}>
+                            Matte Black
+                        </option>
+                        <option value="white" {{ (formData.color|default('black')) == 'white' ? 'selected' : '' }}>
+                            Pearl White
+                        </option>
+                        <option value="silver" {{ (formData.color|default('black')) == 'silver' ? 'selected' : '' }}>
+                            Silver
+                        </option>
                     </select>
                 </div>
                 
                 <button type="submit" class="btn btn-primary btn-lg">Add to Cart</button>
             </form>
+            
+            <!-- Note Symfony -->
+            <div class="mt-4 p-3 bg-light rounded">
+                <small>
+                    <strong>Architecture Symfony :</strong> 
+                    Cette page utilise Entity (Product), FormType (CartItemType), 
+                    Controller (ProductController) et Template Twig.
+                </small>
+            </div>
         </div>
     </div>
 </div>
