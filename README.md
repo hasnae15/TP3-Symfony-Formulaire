@@ -1,82 +1,80 @@
+TP 3 - Les formulaires en Symfony
 
-  TP 3 - Les formulaires en Symfony
 
-Étudiante : ABDELMOUMNI Hasnae  
-Date : 27 décembre 2025
+ Contexte Technique
+Ce projet a été développé sous contraintes techniques importantes :
+- Environnement : Ubuntu 20.04 LTS (VMware)
+- PHP : Version 7.4.3 (limite technique)
+- Espace disque : Très limité (1.6GB disponible)
 
- Architecture Symfony complète implémentée
+ Architecture Symfony Implémentée
 
- 1. Structure Symfony
+ Structure du Projet
 src/
-├── Controller/ProductController.php # Contrôleur avec logique métier
-├── Entity/Product.php # Entité Doctrine-ready
-├── Form/CartItemType.php # FormType Symfony avec validation
-├── Kernel.php # Noyau Symfony
-└── Repository/ # (Prêt pour Doctrine)
+├── Controller/ProductController.php # Contrôleur MVC
+├── Entity/Product.php # Entité avec getters/setters
+├── Form/CartItemType.php # FormType Symfony
+└── Kernel.php # Noyau Symfony
 
 config/
 ├── routes.yaml # Configuration des routes
 └── services.yaml # Configuration des services
 
-templates/product/index.html.twig # Template Twig avec syntaxe Symfony
+templates/product/index.html.twig # Template avec formulaire
 public/index.php # Front controller
+README.md # Documentation
 
 
 
- 2. Composants Symfony implémentés
+ Composants Symfony Démontrés
 
- A. Entity (src/Entity/Product.php)
-- Classe entité avec getters/setters
-- Propriétés : name, price, description, brand, color, connectivity, batteryLife, imageUrl
-- Prête pour l'intégration Doctrine ORM
+ 1. Entity Product (`src/Entity/Product.php`)
+- Classe entité complète avec propriétés privées
+- Getters et setters conformes aux standards Symfony
+- Structure prête pour l'intégration Doctrine ORM
+- Propriétés : `name`, `price`, `description`, `brand`, `color`, `connectivity`, `batteryLife`, `imageUrl`
 
- B. FormType (src/Form/CartItemType.php)
+ 2. FormType CartItemType (`src/Form/CartItemType.php`)
 - Étend `AbstractType` de Symfony
 - Utilise `NumberType` et `ChoiceType`
-- Inclut des contraintes de validation (`Range`)
-- Configuration des attributs HTML (Bootstrap classes)
-- OptionsResolver pour la configuration
+- Contient des contraintes de validation (`Range`)
+- Configuration des attributs HTML pour Bootstrap 5.3
+- `OptionsResolver` pour la configuration
 
- C. Controller (src/Controller/ProductController.php)
-- Architecture MVC Symfony
+ 3. Controller ProductController (`src/Controller/ProductController.php`)
+- Architecture MVC Symfony complète
 - Gestion des requêtes HTTP (GET/POST)
-- Création d'entité et formulaire
-- Rendering de template
-- Traitement des données POST
+- Séparation logique/affichage
+- Traitement des données du formulaire
 
- D. Template Twig (templates/product/index.html.twig)
-- Syntaxe Twig : `{{ variable }}`, `{% block %}`, filtres
-- Héritage de template prêt
-- Affichage conditionnel
+ 4. Template Symfony (`templates/product/index.html.twig`)
+- Syntaxe Twig-like : `{{ variable }}`, `{% block %}`
 - Intégration Bootstrap 5.3
+- Affichage conditionnel des données
+- Design responsive
 
- 3. Fonctionnalités Symfony démontrées
-- ✅ FormTypes avec validation
-- ✅ Entités avec getters/setters
-- ✅ Contrôleurs avec logique métier
-- ✅ Templates Twig avec syntaxe Symfony
-- ✅ Validation côté serveur
-- ✅ Architecture MVC complète
-- ✅ Services et configuration
+ Conformité au TP
+
+Formulaire HTML - Code identique à celui fourni dans l'énoncé  
+Bootstrap 5.3 - Intégration via CDN comme demandé  
+Champ quantity - Input number de 1 à 10 avec style max-width:100px  
+Champ color - Select avec 3 options et style max-width:200px  
+Architecture Symfony - MVC complète avec Entity, FormType et Controller  
+Template - Utilisation de syntaxe Twig-like  
+Validation - Validation HTML5 intégrée  
 
 
-4. Difficultés techniques et solutions
-PHP 7.4 incompatible avec Symfony 6.4+ → Implémentation manuelle des composants Symfony
+ Fonctionnalités
 
-Espace disque limité → Architecture légère sans dépendances Composer
+Page produit avec image et description
 
-Démonstration complète des concepts Symfony demandés dans le TP
+Formulaire avec sélection quantité (1-10)
 
-5. Conformité au TP
-✅ Formulaire identique visuellement
+Choix de couleur (Matte Black, Pearl White, Silver)
 
-✅ Bootstrap 5.3 intégré
+Traitement des données POST
 
-✅ FormType Symfony implémenté
+Design responsive Bootstrap 5.3
 
-✅ Entity Symfony créée
-
-✅ Architecture MVC respectée
-
-✅ Code propre et documenté
+Messages de confirmation
 
